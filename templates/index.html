@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Arena</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div id="container">
+        <h1>Bot Arena</h1>
+        <div id="scoreboard">Score: <span id="score">0</span></div>
+        <div id="timer">Time Left: <span id="time-left">20</span>s</div>
+        <div id="game-box">
+            <button id="target" style="display: none;"></button> <!-- Button game element -->
+            <div id="word-box">
+                <div id="word-display" style="display: none;"></div> <!-- Word display -->
+                <input id="word-input" type="text" placeholder="Type the word here..." style="display: none;" />
+            </div>
+            <div id="success-list" style="display: none;"></div> <!-- Success list -->
+        </div>
+        <div id="end-message" style="display: none;"></div> <!-- End message -->
+    </div>
+    <script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>
