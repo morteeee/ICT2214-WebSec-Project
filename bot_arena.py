@@ -1,5 +1,9 @@
 from flask import Flask, render_template
 
+# Insert any other methods here
+
+
+# App launch
 app = Flask(__name__)
 
 
