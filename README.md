@@ -7,8 +7,17 @@ A browser-based bot detection game where users interact by clicking buttons and 
 - Word-typing game
 - Dynamic timer and scoring
 
-## Setup Instructions
-1. Clone the repository: https://github.com/morteeee/ICT2214-WebSec-Project.git
-2. Navigate to the project directory and install dependencies: pip install flask
-3. Run the app
 
+## Setup Instructions
+
+1. Clone the Repository:
+https://github.com/morteeee/ICT2214-WebSec-Project.git
+
+2. Navigate to the project directory and execute the following commands in command prompt.
+```bash
+  python -m venv myenv
+  myenv\Scripts\activate
+  pip install --upgrade pip
+  --- or python.exe -m pip install --upgrade pip
+  pip install numpy pandas matplotlib joblib tensorflow scikit-learn flask
+```

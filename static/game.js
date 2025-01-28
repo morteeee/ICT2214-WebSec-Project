@@ -11,6 +11,35 @@ let timeLeft = 20; // Game duration in seconds
 let currentWord = '';
 const words = ['hello', 'world', 'javascript', 'matrix', 'python', 'coding']; // Word list
 
+
+function validate(callback){
+    protectionDisarm();
+    var fingerprint = getFingerprint();
+
+    fetch('/validateFingerprint', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ fingerprint: fingerprint })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data['success'] == true){
+            callback();
+            protectionArm();
+        }
+        else{
+            alert('Fingerprint validation failed. Please try again.');
+            protectionArm();
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+
 // Function to randomly choose between button or word game with a 2:1 ratio
 function randomChallenge() {
     const randomChoice = Math.random(); // Generate a random number between 0 and 1
@@ -39,7 +68,7 @@ function startButtonChallenge() {
     target.onclick = () => {
         score++;
         scoreElement.textContent = score;
-        randomChallenge(); // Switch to another challenge
+        validate(randomChallenge);
     };
 }
 
@@ -58,9 +87,12 @@ function startWordChallenge() {
         if (wordInput.value.toLowerCase() === currentWord.toLowerCase()) {
             score++;
             scoreElement.textContent = score;
-            displaySuccessWord(currentWord); // Show the word with a tick
-            timeLeft += 5; // Add 5 seconds to the timer
-            randomChallenge(); // Switch to another challenge
+            
+            validate(function(){
+                displaySuccessWord(currentWord); // Show the word with a tick
+                timeLeft += 5; // Add 5 seconds to the timer
+                randomChallenge(); // Switch to another challenge
+            })
         }
     };
 }
@@ -109,3 +141,4 @@ function showRestartButton() {
 
 // Start the game
 randomChallenge();
+protectionArm();
