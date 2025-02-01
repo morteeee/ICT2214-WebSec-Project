@@ -26,6 +26,8 @@ function validate(callback){
     .then(response => response.json())
     .then(data => {
         if(data['success'] == true){
+            score++;
+            scoreElement.textContent = score;
             callback();
             protectionArm();
         }
@@ -66,8 +68,6 @@ function startButtonChallenge() {
     target.style.top = `${y}px`;
 
     target.onclick = () => {
-        score++;
-        scoreElement.textContent = score;
         validate(randomChallenge);
     };
 }
@@ -85,31 +85,12 @@ function startWordChallenge() {
 
     wordInput.oninput = () => {
         if (wordInput.value.toLowerCase() === currentWord.toLowerCase()) {
-            score++;
-            scoreElement.textContent = score;
-            
             validate(function(){
-                displaySuccessWord(currentWord); // Show the word with a tick
                 timeLeft += 5; // Add 5 seconds to the timer
                 randomChallenge(); // Switch to another challenge
             })
         }
     };
-}
-
-// Display Successful Word with Tick
-function displaySuccessWord(word) {
-    successList.style.display = 'block';
-    const successItem = document.createElement('div');
-    successItem.className = 'success-item';
-    successItem.innerHTML = `${word} <span class="tick">✔</span>`;
-    successList.appendChild(successItem);
-
-    // Remove the success list after 1.5 seconds
-    setTimeout(() => {
-        successList.style.display = 'none';
-        successList.innerHTML = ''; // Clear the list
-    }, 1500);
 }
 
 // Timer Logic
