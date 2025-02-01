@@ -11,3 +11,6 @@ venv/
 # Ignore OS-generated files
 .DS_Store
 Thumbs.db
+
+# Ignore myenv folder
+myenv/

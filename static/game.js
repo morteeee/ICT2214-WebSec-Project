@@ -9,7 +9,38 @@ const gameBox = document.getElementById('game-box');
 let score = 0;
 let timeLeft = 20; // Game duration in seconds
 let currentWord = '';
-const words = ['hello', 'world', 'javascript', 'matrix', 'python', 'coding']; // Word list
+const words = ['hello', 'world', 'java$cript', 'm@trix', 'pyth0n', 'c0d1ng', 'th1si$c0mpl3x']; // Word list
+
+
+function validate(callback){
+    protectionDisarm();
+    var fingerprint = getFingerprint();
+
+    fetch('/validateFingerprint', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ fingerprint: fingerprint })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data['success'] == true){
+            score++;
+            scoreElement.textContent = score;
+            callback();
+            protectionArm();
+        }
+        else{
+            alert('Fingerprint validation failed. Please try again.');
+            protectionArm();
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
 
 // Function to randomly choose between button or word game with a 2:1 ratio
 function randomChallenge() {
@@ -37,9 +68,7 @@ function startButtonChallenge() {
     target.style.top = `${y}px`;
 
     target.onclick = () => {
-        score++;
-        scoreElement.textContent = score;
-        randomChallenge(); // Switch to another challenge
+        validate(randomChallenge);
     };
 }
 
@@ -56,28 +85,12 @@ function startWordChallenge() {
 
     wordInput.oninput = () => {
         if (wordInput.value.toLowerCase() === currentWord.toLowerCase()) {
-            score++;
-            scoreElement.textContent = score;
-            displaySuccessWord(currentWord); // Show the word with a tick
-            timeLeft += 5; // Add 5 seconds to the timer
-            randomChallenge(); // Switch to another challenge
+            validate(function(){
+                timeLeft += 5; // Add 5 seconds to the timer
+                randomChallenge(); // Switch to another challenge
+            })
         }
     };
-}
-
-// Display Successful Word with Tick
-function displaySuccessWord(word) {
-    successList.style.display = 'block';
-    const successItem = document.createElement('div');
-    successItem.className = 'success-item';
-    successItem.innerHTML = `${word} <span class="tick">✔</span>`;
-    successList.appendChild(successItem);
-
-    // Remove the success list after 1.5 seconds
-    setTimeout(() => {
-        successList.style.display = 'none';
-        successList.innerHTML = ''; // Clear the list
-    }, 1500);
 }
 
 // Timer Logic
@@ -109,3 +122,4 @@ function showRestartButton() {
 
 // Start the game
 randomChallenge();
+protectionArm();
