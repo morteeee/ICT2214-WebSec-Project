@@ -31,7 +31,7 @@ class ByeBots:
 
         self._autoencoder, self._scaler = self.loadModel()
 
-        self._MODEL_THRESHOLD = 0.95
+        self._MODEL_THRESHOLD = 0.70
 
         
     

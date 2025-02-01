@@ -9,7 +9,7 @@ const gameBox = document.getElementById('game-box');
 let score = 0;
 let timeLeft = 20; // Game duration in seconds
 let currentWord = '';
-const words = ['hello', 'world', 'javascript', 'matrix', 'python', 'coding']; // Word list
+const words = ['hello', 'world', 'java$cript', 'm@trix', 'pyth0n', 'c0d1ng', 'th1si$c0mpl3x']; // Word list
 
 
 function validate(callback){
