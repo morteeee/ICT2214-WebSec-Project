@@ -19,19 +19,23 @@ def validate_fingerprint():
     data = request.get_json()
     rawFingerprint = data.get('fingerprint')
 
-    validUser = False
-    webdriverSupport = rawFingerprint['webdriver']
-    if(webdriverSupport):
-        validUser = False
-    else:
-        fingerprint = json.dumps(data.get('fingerprint'))
-        result = bb.validateFingerprint(fingerprint, True)
-        if result['anomaly'] == 'No':
-            validUser = True
-        else:
-            validUser = False
+    fingerprint = json.dumps(data.get('fingerprint'))
+    result = bb.validateFingerprint(fingerprint)
+    print(result)
 
-    return {"success": validUser}
+    # validUser = False
+    # webdriverSupport = rawFingerprint['webdriver']
+    # if(webdriverSupport):
+    #     validUser = False
+    # else:
+    #     fingerprint = json.dumps(data.get('fingerprint'))
+    #     result = bb.validateFingerprint(fingerprint, True)
+    #     if result['anomaly'] == 'No':
+    #         validUser = True
+    #     else:
+    #         validUser = False
+
+    return {"success": True, "result" : result}
 
 if __name__ == '__main__':
     app.run(debug=True)
