@@ -31,30 +31,26 @@ class Autoencoder(nn.Module):
 
 class ByeBots:
     def __init__(self):
-        self.scalar = joblib.load('models/9.pkl')
-        self.inputSize = 8
+        self.scalar = joblib.load('models/N2.pkl')
+        self.inputSize = 7
         self.model = Autoencoder(self.inputSize)
-        self.model.load_state_dict(torch.load("models/9.pth"))
+        self.model.load_state_dict(torch.load("models/N2.pth"))
         self.model.eval()
 
-        # Model 7 (SECOND BEST)
-        # self.min_error = 2.1803902e-05
-        # self.threshold = 0.005876108631491658
 
-        #Model 8 (GARBAGE UNLESS YOU WANT TO USE IT)
-        # self.min_error = 4.223479e-05
-        # self.threshold = 0.02339418102055788
+        # Model N1
+        # self.min_error = 0.0004805865
+        # self.threshold = 0.03456286638975142
 
-        #Model 9 (BEST)
-        self.min_error = 8.322179e-06
-        self.threshold = 0.0037997495033778245
-
+        # Model N2
+        self.min_error = 0.00014937416
+        self.threshold = 0.012494638003408902
 
 
         self.TIME_INTERVAL = 0.15
 
         self.columns = [
-            "path_length", "avg_speed", "acceleration", "jerk", "curvature", "straightness", 
+            "avg_speed", "acceleration", "jerk", "curvature", "straightness", 
             "jitter", "direction_changes"
         ]
     
@@ -197,7 +193,7 @@ class ByeBots:
 
         df = self.calculate_features(df)
 
-        df.drop(columns=['idle_time_count', 'x_coords', 'y_coords'], inplace=True)
+        df.drop(columns=['idle_time_count', 'x_coords', 'y_coords', 'path_length'], inplace=True)
 
         df = df.drop(columns=["totalMousePoints"])
 

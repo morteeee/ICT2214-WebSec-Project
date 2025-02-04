@@ -18,8 +18,13 @@ def index():
 def validate_fingerprint():
     data = request.get_json()
     rawFingerprint = data.get('fingerprint')
-
     fingerprint = json.dumps(data.get('fingerprint'))
+
+    # originalText = open("fingerprint.txt", "r").read()
+    # file = open('fingerprint.txt', 'w')
+    # file.writelines(originalText + f"{fingerprint}\n")
+    # file.close()
+
     result = bb.validateFingerprint(fingerprint)
     print(result)
 

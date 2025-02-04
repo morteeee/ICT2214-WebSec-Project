@@ -28,7 +28,6 @@ function validate(callback){
         // document.getElementById('resultBoard').innerHTML = document.getElementById('resultBoard').innerHTML += `<p>${data['result']}</p>`;
 
         var tr = `<tr>`;
-        tr += `<td style="color: ${parseFloat(data['result']['path_length']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['path_length']).toFixed(3)}</td>`;
         tr += `<td style="color: ${parseFloat(data['result']['avg_speed']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['avg_speed']).toFixed(3)}</td>`;
         tr += `<td style="color: ${parseFloat(data['result']['acceleration']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['acceleration']).toFixed(3)}</td>`;
         tr += `<td style="color: ${parseFloat(data['result']['jerk']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['jerk']).toFixed(3)}</td>`;
