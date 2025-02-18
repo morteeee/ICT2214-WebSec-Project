@@ -140,30 +140,70 @@ h1 {
     background-color: #ff8888; /* Lighter red on hover */
 }
 
-/* Table Styling */
-table {
-    border-collapse: collapse;
+/* Ensure Table Headers Stay Fixed */
+.resultBoard {
+    border: 2px solid #00ff00;
+    width: 70%;
+    max-width: 1000px;
+    margin-top: 40px; /* Adds space between game box and data box */
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    background: linear-gradient(135deg, #333333, #121212);
+    border-radius: 10px;
+    padding: 10px;
+    overflow: hidden;
+}
+
+/* ✅ Scrollable Table Body */
+.table-container {
+    max-height: 300px; /* Limits height and enables scrolling */
+    overflow-y: auto; /* Enables vertical scrolling */
+    overflow-x: hidden;
+    display: block;
     width: 100%;
 }
 
-/* Table Header & Cells */
+/* ✅ Proper Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Ensures equal column widths */
+    background: black;
+}
+
+/* ✅ Keeps the table header fixed while scrolling */
+thead {
+    background-color: #222;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+/* ✅ Ensure proper column widths */
 th, td {
-    border: 1px solid black;
+    border: 1px solid #00ff00;
     padding: 8px;
-    text-align: left;
+    text-align: center;
+    color: #00ff00;
+    width: 14%; /* Ensures equal width for all columns */
 }
 
-/* Table Header Background */
-th {
-    background-color: #494444;
+/* ✅ Prevents data from overflowing */
+tbody td {
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Data Table Container */
-.resultBoard {
-    border: 1px solid white;
-    height: 50%;
-    width: 70%;
+/* ✅ Custom Scrollbar Styling */
+.table-container::-webkit-scrollbar {
+    width: 10px;
 }
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #00ff00;
+    border-radius: 5px;
+}
+
 
 /* Final result display */
 #final-result {

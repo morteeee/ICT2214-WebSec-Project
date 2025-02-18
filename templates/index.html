@@ -29,22 +29,24 @@
 
     <!-- remove in future -->
     <div class="resultBoard">
-        <table>
-            <thead>
-                <tr>
-                    <th>Avg Speed</th>
-                    <th>Acceleration</th>
-                    <th>Jerk</th>
-                    <th>Curvature</th>
-                    <th>Straightness</th>
-                    <th>Jitter</th>
-                    <th>Direction Changes</th>
-                </tr>
-            </thead>
-            <tbody id="resultBoard">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Avg Speed</th>
+                        <th>Acceleration</th>
+                        <th>Jerk</th>
+                        <th>Curvature</th>
+                        <th>Straightness</th>
+                        <th>Jitter</th>
+                        <th>Direction Changes</th>
+                    </tr>
+                </thead>
+                <tbody id="resultBoard">
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script src="{{ url_for('static', filename='game.js') }}"></script>

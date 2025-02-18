@@ -37,12 +37,18 @@ function validate(callback) {
 
         dataInstances.push(instance);
 
-        let tr = `<tr>`;
-        Object.values(instance).forEach(value => {
-            tr += `<td style="color: ${value < 50 ? 'red' : '#00ff00'}">${value.toFixed(3)}</td>`;
+        // Append Data to Table with Correct Alignment
+        let tr = document.createElement('tr');
+        Object.keys(instance).forEach(key => {
+            let td = document.createElement('td');
+            td.textContent = instance[key].toFixed(3);
+            td.style.color = instance[key] < 50 ? 'red' : '#00ff00';
+            tr.appendChild(td);
         });
-        tr += `</tr>`;
-        document.getElementById('resultBoard').innerHTML += tr;
+
+        // Append new row to the table
+        let resultTable = document.getElementById('resultBoard');
+        resultTable.appendChild(tr);
 
         if (timeLeft <= 0) {
             sendDataToBackend();
