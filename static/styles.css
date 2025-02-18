@@ -153,7 +153,7 @@ h1 {
     overflow: hidden;
 }
 
-/* ✅ Scrollable Table Body */
+/* Scrollable Table Body */
 .table-container {
     max-height: 300px; /* Limits height and enables scrolling */
     overflow-y: auto; /* Enables vertical scrolling */
@@ -162,7 +162,7 @@ h1 {
     width: 100%;
 }
 
-/* ✅ Proper Table Styling */
+/* Proper Table Styling */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -170,7 +170,7 @@ table {
     background: black;
 }
 
-/* ✅ Keeps the table header fixed while scrolling */
+/* Keeps the table header fixed while scrolling */
 thead {
     background-color: #222;
     position: sticky;
@@ -178,7 +178,7 @@ thead {
     z-index: 2;
 }
 
-/* ✅ Ensure proper column widths */
+/* Ensure proper column widths */
 th, td {
     border: 1px solid #00ff00;
     padding: 8px;
@@ -187,14 +187,14 @@ th, td {
     width: 14%; /* Ensures equal width for all columns */
 }
 
-/* ✅ Prevents data from overflowing */
+/* Prevents data from overflowing */
 tbody td {
     white-space: nowrap; /* Prevent text wrapping */
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* ✅ Custom Scrollbar Styling */
+/* Custom Scrollbar Styling */
 .table-container::-webkit-scrollbar {
     width: 10px;
 }

@@ -24,15 +24,15 @@ def validate_fingerprint():
     return {"success": True, "result": result}
 
 
-# Define weights (you can adjust these based on importance)
+# Define weights
 WEIGHTS = {
-    "avg_speed": 0.15,
-    "acceleration": 0.20,
-    "jerk": 0.10,
-    "curvature": 0.10,
-    "straightness": 0.15,
-    "jitter": 0.15,
-    "direction_changes": 0.15
+    "avg_speed": 0.20,  # Humans tend to move at a consistent speed.
+    "acceleration": 0.10,  # Less influence, as sudden acceleration can happen in both humans & bots.
+    "jerk": 0.12,  # Still relevant, but reduced impact.
+    "curvature": 0.10,  # Less weight, as human movement varies.
+    "straightness": 0.15,  # Humans usually prefer straight paths.
+    "jitter": 0.20,  # High jitter is a key bot indicator.
+    "direction_changes": 0.13  # Moderate influence.
 }
 
 
@@ -48,23 +48,19 @@ def calculate_weighted_score():
         # Convert data to NumPy array
         data_matrix = np.array([[instance[key] for key in WEIGHTS.keys()] for instance in instances])
 
-        # Compute mean values across all instances
-        avg_values = np.mean(data_matrix, axis=0)
+        # Compute weighted score for each instance
+        instance_scores = np.dot(data_matrix, list(WEIGHTS.values()))
 
-        # Compute weighted score
-        weighted_score = np.dot(avg_values, list(WEIGHTS.values()))
-
-        print(weighted_score)
+        # Compute the final score as an average of all weighted instance scores
+        weighted_score = np.mean(instance_scores)  # Compute mean of weighted scores per instance
 
         # Categorization
-        if weighted_score >= 80:
-            category = "Human-like"
-        elif 50 <= weighted_score < 80:
+        if weighted_score > 70:
+            category = "Advanced Bot (Human-like)"
+        elif 50 <= weighted_score < 70:
             category = "Intermediate Bot"
         else:
             category = "Basic Bot"
-
-        print(category)
 
         return jsonify({"weighted_score": round(weighted_score, 2), "category": category})
 

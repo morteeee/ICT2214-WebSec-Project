@@ -9,7 +9,7 @@ const scoreDisplay = document.getElementById('score-display');
 const categoryDisplay = document.getElementById('category-display');
 
 let score = 0;
-let timeLeft = 10;
+let timeLeft = 20;
 let dataInstances = [];
 
 function validate(callback) {
