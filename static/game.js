@@ -3,8 +3,6 @@ const wordDisplay = document.getElementById('word-display');
 const wordInput = document.getElementById('word-input');
 const scoreElement = document.getElementById('score');
 const timeLeftElement = document.getElementById('time-left');
-const endMessage = document.getElementById('end-message');
-const successList = document.getElementById('success-list');
 const gameBox = document.getElementById('game-box');
 const finalResultDiv = document.getElementById('final-result');
 const scoreDisplay = document.getElementById('score-display');
@@ -75,7 +73,7 @@ function displayFinalResult(weightedScore, category) {
     // Show final result
     scoreDisplay.innerHTML = `Weighted Score: <strong>${weightedScore}</strong>`;
     categoryDisplay.innerHTML = `Category: <strong>${category}</strong>`;
-    finalResultDiv.style.display = 'block';
+    finalResultDiv.classList.remove('hidden');
 }
 
 // Function to send collected data to Python for weighted scoring
@@ -109,7 +107,6 @@ function randomChallenge() {
 function startButtonChallenge() {
     wordDisplay.style.display = 'none';
     wordInput.style.display = 'none';
-    successList.style.display = 'none';
     target.style.display = 'block';
 
     const boxWidth = gameBox.offsetWidth;
@@ -135,7 +132,6 @@ const timerInterval = setInterval(() => {
         target.style.display = 'none';
         wordDisplay.style.display = 'none';
         wordInput.style.display = 'none';
-        successList.style.display = 'none';
         showRestartButton();
         sendDataToBackend();
     }

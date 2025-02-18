@@ -177,7 +177,6 @@ th {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    display: none; /* Initially hidden */
     align-items: center;  /* Centers horizontally */
     justify-content: center; /* Centers vertically */
 }
@@ -196,7 +195,6 @@ th {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    display: none; /* Initially hidden */
 }
 
 #restart-button:hover {
