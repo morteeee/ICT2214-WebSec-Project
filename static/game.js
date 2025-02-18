@@ -1,6 +1,4 @@
 const target = document.getElementById('target');
-const wordDisplay = document.getElementById('word-display');
-const wordInput = document.getElementById('word-input');
 const scoreElement = document.getElementById('score');
 const timeLeftElement = document.getElementById('time-left');
 const gameBox = document.getElementById('game-box');
@@ -12,7 +10,7 @@ let score = 0;
 let timeLeft = 20;
 let dataInstances = [];
 
-function validate(callback) {
+function validate() {
     protectionDisarm();
     var fingerprint = getFingerprint();
 
@@ -57,7 +55,7 @@ function validate(callback) {
         if (data['success'] == true) {
             score++;
             scoreElement.textContent = score;
-            callback();
+            startButtonChallenge();
             protectionArm();
         } else {
             alert('Fingerprint validation failed. Please try again.');
@@ -73,8 +71,6 @@ function validate(callback) {
 function displayFinalResult(weightedScore, category) {
     // Hide all game elements
     target.style.display = 'none';
-    wordDisplay.style.display = 'none';
-    wordInput.style.display = 'none';
 
     // Show final result
     scoreDisplay.innerHTML = `Weighted Score: <strong>${weightedScore}</strong>`;
@@ -99,20 +95,8 @@ function sendDataToBackend() {
     });
 }
 
-// Random challenge selection
-function randomChallenge() {
-    const randomChoice = Math.random();
-    if (randomChoice < 0.67) {
-        startButtonChallenge();
-    } else {
-        startButtonChallenge();
-    }
-}
-
 // Button Challenge Logic
 function startButtonChallenge() {
-    wordDisplay.style.display = 'none';
-    wordInput.style.display = 'none';
     target.style.display = 'block';
 
     const boxWidth = gameBox.offsetWidth;
@@ -124,7 +108,7 @@ function startButtonChallenge() {
     target.style.top = `${y}px`;
 
     target.onclick = () => {
-        validate(randomChallenge);
+        validate();
     };
 }
 
@@ -136,12 +120,10 @@ const timerInterval = setInterval(() => {
     if (timeLeft <= 0) {
         clearInterval(timerInterval);
         target.style.display = 'none';
-        wordDisplay.style.display = 'none';
-        wordInput.style.display = 'none';
         sendDataToBackend();
     }
 }, 1000);
 
 // Start the game
-randomChallenge();
+startButtonChallenge();
 protectionArm();
