@@ -6,13 +6,15 @@ const timeLeftElement = document.getElementById('time-left');
 const endMessage = document.getElementById('end-message');
 const successList = document.getElementById('success-list');
 const gameBox = document.getElementById('game-box');
+const finalResultDiv = document.getElementById('final-result');
+const scoreDisplay = document.getElementById('score-display');
+const categoryDisplay = document.getElementById('category-display');
+
 let score = 0;
-let timeLeft = 20; // Game duration in seconds
-let currentWord = '';
-const words = ['hello', 'world', 'java$cript', 'm@trix', 'pyth0n', 'c0d1ng', 'th1si$c0mpl3x']; // Word list
+let timeLeft = 10;
+let dataInstances = [];
 
-
-function validate(callback){
+function validate(callback) {
     protectionDisarm();
     var fingerprint = getFingerprint();
 
@@ -25,27 +27,35 @@ function validate(callback){
     })
     .then(response => response.json())
     .then(data => {
-        // document.getElementById('resultBoard').innerHTML = document.getElementById('resultBoard').innerHTML += `<p>${data['result']}</p>`;
+        let instance = {
+            avg_speed: parseFloat(data['result']['avg_speed']),
+            acceleration: parseFloat(data['result']['acceleration']),
+            jerk: parseFloat(data['result']['jerk']),
+            curvature: parseFloat(data['result']['curvature']),
+            straightness: parseFloat(data['result']['straightness']),
+            jitter: parseFloat(data['result']['jitter']),
+            direction_changes: parseFloat(data['result']['direction_changes'])
+        };
 
-        var tr = `<tr>`;
-        tr += `<td style="color: ${parseFloat(data['result']['avg_speed']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['avg_speed']).toFixed(3)}</td>`;
-        tr += `<td style="color: ${parseFloat(data['result']['acceleration']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['acceleration']).toFixed(3)}</td>`;
-        tr += `<td style="color: ${parseFloat(data['result']['jerk']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['jerk']).toFixed(3)}</td>`;
-        tr += `<td style="color: ${parseFloat(data['result']['curvature']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['curvature']).toFixed(3)}</td>`;
-        tr += `<td style="color: ${parseFloat(data['result']['straightness']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['straightness']).toFixed(3)}</td>`;
-        tr += `<td style="color: ${parseFloat(data['result']['jitter']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['jitter']).toFixed(3)}</td>`;
-        tr += `<td style="color: ${parseFloat(data['result']['direction_changes']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['direction_changes']).toFixed(3)}</td>`;
+        dataInstances.push(instance);
 
+        let tr = `<tr>`;
+        Object.values(instance).forEach(value => {
+            tr += `<td style="color: ${value < 50 ? 'red' : '#00ff00'}">${value.toFixed(3)}</td>`;
+        });
+        tr += `</tr>`;
         document.getElementById('resultBoard').innerHTML += tr;
-        
 
-        if(data['success'] == true){
+        if (timeLeft <= 0) {
+            sendDataToBackend();
+        }
+
+        if (data['success'] == true) {
             score++;
             scoreElement.textContent = score;
             callback();
             protectionArm();
-        }
-        else{
+        } else {
             alert('Fingerprint validation failed. Please try again.');
             protectionArm();
         }
@@ -55,14 +65,42 @@ function validate(callback){
     });
 }
 
+// Function to display final weighted score and category in the middle of the game box
+function displayFinalResult(weightedScore, category) {
+    // Hide all game elements
+    target.style.display = 'none';
+    wordDisplay.style.display = 'none';
+    wordInput.style.display = 'none';
 
-// Function to randomly choose between button or word game with a 2:1 ratio
+    // Show final result
+    scoreDisplay.innerHTML = `Weighted Score: <strong>${weightedScore}</strong>`;
+    categoryDisplay.innerHTML = `Category: <strong>${category}</strong>`;
+    finalResultDiv.style.display = 'block';
+}
+
+// Function to send collected data to Python for weighted scoring
+function sendDataToBackend() {
+    fetch('/calculateWeightedScore', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ instances: dataInstances })
+    })
+    .then(response => response.json())
+    .then(data => {
+        //alert(`Weighted Score: ${data.weighted_score} | Category: ${data.category}`);
+        displayFinalResult(data.weighted_score, data.category);
+    })
+    .catch(error => {
+        console.error('Error sending data:', error);
+    });
+}
+
+// Random challenge selection
 function randomChallenge() {
-    const randomChoice = Math.random(); // Generate a random number between 0 and 1
+    const randomChoice = Math.random();
     if (randomChoice < 0.67) {
         startButtonChallenge();
     } else {
-        // startWordChallenge();
         startButtonChallenge();
     }
 }
@@ -87,52 +125,25 @@ function startButtonChallenge() {
     };
 }
 
-// Word Challenge Logic
-function startWordChallenge() {
-    target.style.display = 'none';
-    wordInput.style.display = 'block';
-    wordDisplay.style.display = 'block';
-    successList.style.display = 'none';
-
-    currentWord = words[Math.floor(Math.random() * words.length)];
-    wordDisplay.textContent = currentWord;
-    wordInput.value = '';
-
-    wordInput.oninput = () => {
-        if (wordInput.value.toLowerCase() === currentWord.toLowerCase()) {
-            validate(function(){
-                timeLeft += 5; // Add 5 seconds to the timer
-                randomChallenge(); // Switch to another challenge
-            })
-        }
-    };
-}
-
 // Timer Logic
 const timerInterval = setInterval(() => {
     timeLeft--;
     timeLeftElement.textContent = timeLeft;
 
     if (timeLeft <= 0) {
-        clearInterval(timerInterval); // Stop the timer
+        clearInterval(timerInterval);
         target.style.display = 'none';
         wordDisplay.style.display = 'none';
         wordInput.style.display = 'none';
         successList.style.display = 'none';
         showRestartButton();
+        sendDataToBackend();
     }
 }, 1000);
 
 // Function to display the restart button
 function showRestartButton() {
-    const restartButton = document.createElement('button'); // Create button
-    restartButton.textContent = 'Test Again'; // Button label
-    restartButton.id = 'restart-button'; // Assign an ID for styling
-    restartButton.addEventListener('click', () => {
-        window.location.reload(); // Reload the page to restart the game
-    });
-    endMessage.appendChild(restartButton); // Add button below the message
-    endMessage.style.display = 'block';
+    document.getElementById('restart-button').style.display = 'block';
 }
 
 // Start the game

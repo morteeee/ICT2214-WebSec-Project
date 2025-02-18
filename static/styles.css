@@ -1,3 +1,4 @@
+
 /* General body styling with matrix-like background */
 body {
     margin: 0;
@@ -5,12 +6,14 @@ body {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
     display: flex;
+    flex-direction: column;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
     height: 100vh; /* Full viewport height */
     background-color: #121212; /* Dark background for the Matrix effect */
     color: #00ff00; /* Neon green text */
-    overflow: hidden; /* Prevent scrollbars */
+    overflow-y: auto; /* Allow vertical scrolling */
+    height: auto; /* Adjust to content */
     position: relative;
 }
 
@@ -137,32 +140,55 @@ h1 {
     background-color: #ff8888; /* Lighter red on hover */
 }
 
-/* Success list styling */
-#success-list {
-    font-size: 18px;
-    color: #00ff00;
-    margin-top: 20px;
+/* Table Styling */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* Table Header & Cells */
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Table Header Background */
+th {
+    background-color: #494444;
+}
+
+/* Data Table Container */
+.resultBoard {
+    border: 1px solid white;
+    height: 50%;
+    width: 70%;
+}
+
+/* Final result display */
+#final-result {
+    position: absolute;
+    width: 50%;
+    background: black;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    padding: 20px;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none; /* Initially hidden */
+    align-items: center;  /* Centers horizontally */
+    justify-content: center; /* Centers vertically */
 }
 
-.success-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
+.hidden {
+    display: none;
 }
 
-.success-item .tick {
-    margin-left: 10px;
-    color: #00ff00;
-    font-weight: bold;
-}
-
-/* Restart button styling */
+/* Restart Button */
 #restart-button {
-    margin-top: 10px; /* Add spacing between message and button */
+    margin-top: 10px;
     padding: 10px 20px;
     font-size: 18px;
     background-color: #00ff00;
@@ -170,8 +196,9 @@ h1 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display: none; /* Initially hidden */
 }
 
 #restart-button:hover {
-    background-color: #00cc00; /* Darker green on hover */
+    background-color: #00cc00;
 }
