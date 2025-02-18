@@ -6,30 +6,6 @@
     <title>Bot Arena</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script src="{{ url_for('static', filename='protection.js') }}"></script>
-
-    <style>
-        body{
-            display: flex;
-            flex-direction: column;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #494444;
-        }
-        .resultBoard{
-            border: 1px solid white;
-            height: 50%;
-            width: 70%;
-        }
-    </style>
 </head>
 <body>
     <div id="container">
@@ -38,33 +14,35 @@
         <div id="timer">Time Left: <span id="time-left">20</span>s</div>
         <div id="game-box">
             <button id="target" style="display: none;"></button> <!-- Button game element -->
-            <div id="word-box">
-                <div id="word-display" style="display: none;"></div> <!-- Word display -->
-                <input id="word-input" type="text" placeholder="Type the word here..." style="display: none;" />
+            <!-- Final Result Box (Initially Hidden) -->
+            <div id="final-result" class="hidden">
+                <p id="score-display"></p>
+                <p id="category-display"></p>
+                <button id="restart-button" onclick="window.location.reload();">Test Again</button>
             </div>
-            <div id="success-list" style="display: none;"></div> <!-- Success list -->
         </div>
-        <div id="end-message" style="display: none;"></div> <!-- End message -->
     </div>
 
     <!-- remove in future -->
     <div class="resultBoard">
-        <table>
-            <thead>
-                <tr>
-                    <th>Avg Speed</th>
-                    <th>Acceleration</th>
-                    <th>Jerk</th>
-                    <th>Curvature</th>
-                    <th>Straightness</th>
-                    <th>Jitter</th>
-                    <th>Direction Changes</th>
-                </tr>
-            </thead>
-            <tbody id="resultBoard">
-                
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Avg Speed</th>
+                        <th>Acceleration</th>
+                        <th>Jerk</th>
+                        <th>Curvature</th>
+                        <th>Straightness</th>
+                        <th>Jitter</th>
+                        <th>Direction Changes</th>
+                    </tr>
+                </thead>
+                <tbody id="resultBoard">
+
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script src="{{ url_for('static', filename='game.js') }}"></script>

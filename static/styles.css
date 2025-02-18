@@ -1,3 +1,4 @@
+
 /* General body styling with matrix-like background */
 body {
     margin: 0;
@@ -5,12 +6,14 @@ body {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
     display: flex;
+    flex-direction: column;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
     height: 100vh; /* Full viewport height */
     background-color: #121212; /* Dark background for the Matrix effect */
     color: #00ff00; /* Neon green text */
-    overflow: hidden; /* Prevent scrollbars */
+    overflow-y: auto; /* Allow vertical scrolling */
+    height: auto; /* Adjust to content */
     position: relative;
 }
 
@@ -137,32 +140,92 @@ h1 {
     background-color: #ff8888; /* Lighter red on hover */
 }
 
-/* Success list styling */
-#success-list {
-    font-size: 18px;
-    color: #00ff00;
-    margin-top: 20px;
+/* Ensure Table Headers Stay Fixed */
+.resultBoard {
+    border: 2px solid #00ff00;
+    width: 70%;
+    max-width: 1000px;
+    margin-top: 40px; /* Adds space between game box and data box */
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    background: linear-gradient(135deg, #333333, #121212);
+    border-radius: 10px;
+    padding: 10px;
+    overflow: hidden;
+}
+
+/* Scrollable Table Body */
+.table-container {
+    max-height: 300px; /* Limits height and enables scrolling */
+    overflow-y: auto; /* Enables vertical scrolling */
+    overflow-x: hidden;
+    display: block;
+    width: 100%;
+}
+
+/* Proper Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Ensures equal column widths */
+    background: black;
+}
+
+/* Keeps the table header fixed while scrolling */
+thead {
+    background-color: #222;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+/* Ensure proper column widths */
+th, td {
+    border: 1px solid #00ff00;
+    padding: 8px;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.success-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-}
-
-.success-item .tick {
-    margin-left: 10px;
     color: #00ff00;
-    font-weight: bold;
+    width: 14%; /* Ensures equal width for all columns */
 }
 
-/* Restart button styling */
+/* Prevents data from overflowing */
+tbody td {
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Custom Scrollbar Styling */
+.table-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #00ff00;
+    border-radius: 5px;
+}
+
+
+/* Final result display */
+#final-result {
+    position: absolute;
+    width: 50%;
+    background: black;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    padding: 20px;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hidden {
+    display: none;
+}
+
+/* Restart Button */
 #restart-button {
-    margin-top: 10px; /* Add spacing between message and button */
+    margin-top: 10px;
     padding: 10px 20px;
     font-size: 18px;
     background-color: #00ff00;
@@ -170,8 +233,9 @@ h1 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    align-self: center;
 }
 
 #restart-button:hover {
-    background-color: #00cc00; /* Darker green on hover */
+    background-color: #00cc00;
 }
