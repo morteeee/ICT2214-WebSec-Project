@@ -25,6 +25,20 @@ function validate(callback){
     })
     .then(response => response.json())
     .then(data => {
+        // document.getElementById('resultBoard').innerHTML = document.getElementById('resultBoard').innerHTML += `<p>${data['result']}</p>`;
+
+        var tr = `<tr>`;
+        tr += `<td style="color: ${parseFloat(data['result']['avg_speed']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['avg_speed']).toFixed(3)}</td>`;
+        tr += `<td style="color: ${parseFloat(data['result']['acceleration']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['acceleration']).toFixed(3)}</td>`;
+        tr += `<td style="color: ${parseFloat(data['result']['jerk']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['jerk']).toFixed(3)}</td>`;
+        tr += `<td style="color: ${parseFloat(data['result']['curvature']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['curvature']).toFixed(3)}</td>`;
+        tr += `<td style="color: ${parseFloat(data['result']['straightness']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['straightness']).toFixed(3)}</td>`;
+        tr += `<td style="color: ${parseFloat(data['result']['jitter']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['jitter']).toFixed(3)}</td>`;
+        tr += `<td style="color: ${parseFloat(data['result']['direction_changes']) < 50 ? 'red' : '#00ff00'}">${parseFloat(data['result']['direction_changes']).toFixed(3)}</td>`;
+
+        document.getElementById('resultBoard').innerHTML += tr;
+        
+
         if(data['success'] == true){
             score++;
             scoreElement.textContent = score;
@@ -48,7 +62,8 @@ function randomChallenge() {
     if (randomChoice < 0.67) {
         startButtonChallenge();
     } else {
-        startWordChallenge();
+        // startWordChallenge();
+        startButtonChallenge();
     }
 }
 

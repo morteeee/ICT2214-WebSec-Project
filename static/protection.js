@@ -79,7 +79,7 @@ function leEngine(){
 function protectionArm(){
     asdfingerprint = {};
     sensorData = ``;
-    asdfingerprintinterval = setInterval(leEngine, 150);
+    asdfingerprintinterval = setInterval(leEngine, 10);
 }
 
 function protectionDisarm(){

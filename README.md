@@ -19,5 +19,6 @@ https://github.com/morteeee/ICT2214-WebSec-Project.git
   myenv\Scripts\activate
   pip install --upgrade pip
   --- or python.exe -m pip install --upgrade pip
-  pip install numpy pandas matplotlib joblib tensorflow scikit-learn flask
+
+  pip install torch torchvision torchaudio joblib scikit-learn pandas flask matplotlib
 ```
