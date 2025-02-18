@@ -132,15 +132,9 @@ const timerInterval = setInterval(() => {
         target.style.display = 'none';
         wordDisplay.style.display = 'none';
         wordInput.style.display = 'none';
-        showRestartButton();
         sendDataToBackend();
     }
 }, 1000);
-
-// Function to display the restart button
-function showRestartButton() {
-    document.getElementById('restart-button').style.display = 'block';
-}
 
 // Start the game
 randomChallenge();
