@@ -22,3 +22,6 @@ https://github.com/morteeee/ICT2214-WebSec-Project.git
 
   pip install torch torchvision torchaudio joblib scikit-learn pandas flask matplotlib pycryptodome
 ```
+
+## Obfuscation
+Obfuscation is done using Obfuscator.IO (https://obfuscator.io/) on the 'Low' Preset.
