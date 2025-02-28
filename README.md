@@ -1,11 +1,10 @@
 # Bot Arena Game
 
-A browser-based bot detection game where users interact by clicking buttons and typing words. Built using HTML, CSS, JavaScript, and Python (Flask).
+A browser-based bot detection game where users interact by clicking buttons. Built using HTML, CSS, JavaScript, and Python (Flask).
 
 ## Features
-- Button-clicking game
-- Word-typing game
-- Dynamic timer and scoring
+- Focuses on clicked-based activities with a simple button-clicking game approach.
+- Dynamic scoring based on overall confidence score for each parameter using trained ML models.
 
 
 ## Setup Instructions
@@ -20,7 +19,7 @@ https://github.com/morteeee/ICT2214-WebSec-Project.git
   pip install --upgrade pip
   --- or python.exe -m pip install --upgrade pip
 
-  pip install torch torchvision torchaudio joblib scikit-learn pandas flask matplotlib pycryptodome
+  pip install -r requirements.txt
 ```
 
 ## Obfuscation

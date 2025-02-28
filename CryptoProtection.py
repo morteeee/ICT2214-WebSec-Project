@@ -1,7 +1,6 @@
-from Crypto.Cipher import AES, PKCS1_OAEP
-from Crypto.PublicKey import RSA
-from Crypto.Hash import SHA256
-from Crypto.Random import get_random_bytes
+from Cryptodome.Cipher import AES, PKCS1_OAEP
+from Cryptodome.PublicKey import RSA
+from Cryptodome.Hash import SHA256
 
 class CryptoProtection:
     def __init__(self):
