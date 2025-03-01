@@ -5,6 +5,8 @@ import json
 from ByeBots import ByeBots
 bb = ByeBots()
 
+from CryptoProtection import CryptoProtection
+cp = CryptoProtection()
 
 # App launch
 app = Flask(__name__)
@@ -12,16 +14,33 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    production_mode = True
+    return render_template('index.html', production_mode=production_mode)
 
+@app.route('/getPublicKey', methods=['GET'])
+def get_public_key():
+    return jsonify({"public_key": cp.get_public_key_pem()})
 
 @app.route('/validateFingerprint', methods=['POST'])
 def validate_fingerprint():
     data = request.get_json()
-    fingerprint = json.dumps(data.get('fingerprint'))
-    result = bb.validateFingerprint(fingerprint)
+    if not all(k in data for k in ('encrypted_key', 'ciphertext', 'nonce', 'tag')):
+        return jsonify({"error": "Missing encryption parameters"}), 400
 
-    return {"success": True, "result": result}
+    try:
+        encrypted_aes_key = bytes.fromhex(data['encrypted_key'])
+        aes_key = cp.decrypt_aes_key(encrypted_aes_key)
+        decrypted_json_str = cp.aes_decrypt(data['ciphertext'],
+                                            data['nonce'],
+                                            data['tag'],
+                                            aes_key)
+        decrypted_data = json.loads(decrypted_json_str)
+        fingerprint_data = decrypted_data.get('fingerprint')
+        fingerprint = json.dumps(fingerprint_data)
+        result = bb.validateFingerprint(fingerprint)
+        return jsonify({"success": True, "result": result})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 # Define weights
@@ -29,9 +48,9 @@ WEIGHTS = {
     "avg_speed": 0.20,  # Humans tend to move at a consistent speed.
     "acceleration": 0.10,  # Less influence, as sudden acceleration can happen in both humans & bots.
     "jerk": 0.12,  # Still relevant, but reduced impact.
-    "curvature": 0.10,  # Less weight, as human movement varies.
+    "curvature": 0.15,  # Less weight, as human movement varies.
     "straightness": 0.15,  # Humans usually prefer straight paths.
-    "jitter": 0.20,  # High jitter is a key bot indicator.
+    "jitter": 0.15,  # High jitter is a key bot indicator.
     "direction_changes": 0.13  # Moderate influence.
 }
 
