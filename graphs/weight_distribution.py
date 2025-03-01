@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 # Define parameters and their respective weightages
 parameters = ["Avg Speed", "Acceleration", "Jerk", "Curvature", "Straightness", "Jitter", "Direction Changes"]
-weights = [20, 10, 12, 10, 15, 20, 13]  # Corresponding weightage values
+weights = [20, 10, 12, 15, 15, 15, 13]  # Corresponding weightage values
 
 # Define colors: Darker green for higher weightage, lighter green for lower weightage
 colors = ["#004d00", "#66ff66", "#33cc33", "#66ff66", "#009900", "#004d00", "#008000"]
