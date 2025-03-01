@@ -48,9 +48,9 @@ WEIGHTS = {
     "avg_speed": 0.20,  # Humans tend to move at a consistent speed.
     "acceleration": 0.10,  # Less influence, as sudden acceleration can happen in both humans & bots.
     "jerk": 0.12,  # Still relevant, but reduced impact.
-    "curvature": 0.10,  # Less weight, as human movement varies.
+    "curvature": 0.15,  # Less weight, as human movement varies.
     "straightness": 0.15,  # Humans usually prefer straight paths.
-    "jitter": 0.20,  # High jitter is a key bot indicator.
+    "jitter": 0.15,  # High jitter is a key bot indicator.
     "direction_changes": 0.13  # Moderate influence.
 }
 
