@@ -5,7 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bot Arena</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script src="{{ url_for('static', filename='protection.js') }}"></script>
+    
+    <!-- Create a client-side variable using the server value -->
+    <script>
+        var productionMode = {{ production_mode | tojson }};
+    </script>
+    
+    <!-- Conditionally load the protection script -->
+    {% if production_mode %}
+      <script src="{{ url_for('static', filename='ob_protection.js') }}"></script>
+    {% else %}
+      <script src="{{ url_for('static', filename='protection.js') }}"></script>
+    {% endif %}
 </head>
 <body>
     <div id="container">
@@ -23,7 +34,7 @@
         </div>
     </div>
 
-    <!-- remove in future -->
+    <!-- Remove in future: resultBoard for debugging -->
     <div class="resultBoard">
         <div class="table-container">
             <table>
@@ -39,12 +50,15 @@
                     </tr>
                 </thead>
                 <tbody id="resultBoard">
-
                 </tbody>
             </table>
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='game.js') }}"></script>
+    {% if production_mode %}
+      <script src="{{ url_for('static', filename='ob_game.js') }}"></script>
+    {% else %}
+      <script src="{{ url_for('static', filename='game.js') }}"></script>
+    {% endif %}
 </body>
 </html>
