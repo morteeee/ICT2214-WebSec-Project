@@ -1,6 +1,6 @@
 # Bot Arena Game
 
-A browser-based bot detection game where users interact by clicking buttons. Built using HTML, CSS, JavaScript, and Python (Flask).
+A browser-based bot detection game where bots interact by clicking buttons. Built using HTML, CSS, JavaScript, and Python (Flask).
 
 ## Features
 - Focuses on clicked-based activities with a simple button-clicking game approach.
